@@ -355,7 +355,7 @@
       </button>
       <details class="help" id="help" hidden>
         <summary>앱이 열리지 않나요?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
-        <div class="help-content"><p>휴대폰에 카카오내비가 설치되어 있는지 확인한 뒤 출발 버튼을 다시 눌러 주세요.</p><p>카카오톡 안에서 열리지 않으면 브라우저로 이 링크를 열어 주세요. 도움이 필요하면 아래 연락 버튼으로 문의해 주세요.</p></div>
+        <div class="help-content"><p><b>아이폰:</b> '카카오내비에서 이 페이지를 열겠습니까?'가 뜨면 <b>열기</b>를 눌러 주세요. 확인창 없이 카카오 안내 페이지가 보이면 <b>앱 실행하기</b>를 누르면 됩니다.</p><p>휴대폰에 카카오내비가 설치되어 있는지 확인한 뒤 출발 버튼을 다시 눌러 주세요.</p><p>카카오톡 안에서 열리지 않으면 브라우저로 이 링크를 열어 주세요. 도움이 필요하면 아래 연락 버튼으로 문의해 주세요.</p></div>
       </details>
     </section>
 
@@ -378,12 +378,15 @@
        ▼ 여기만 바꾸세요: 카카오디벨로퍼스 [앱] > [플랫폼 키] > [JavaScript 키]
        링크 형식: ?name=현장명&addr=주소   또는   ?name=현장명&lat=37.501&lng=127.0396
        autoOpen을 false로 바꾸면 출발 버튼을 눌렀을 때만 카카오내비를 엽니다.
+       아이폰은 웹에서 앱을 열 때 항상 '열기' 확인창을 띄우므로, 기본값으로 자동 실행하지 않고
+       화면의 출발 버튼을 누르게 합니다 (autoOpenOnIOS를 true로 바꾸면 아이폰도 자동 실행).
     ─────────────────────────────────────────────────────────────── */
     const CONFIG = {
       jsKey: '3481cdf4ec96ad372e2440d8e832bcf0',
       phone: '01046912521',            // 시스템 담당 한명국
       sdkUrl: 'https://t1.kakaocdn.net/kakao_js_sdk/2.8.4/kakao.min.js',
       autoOpen: true,
+      autoOpenOnIOS: false,
       timeoutMs: 15000
     };
     /* preview.html이 주입하는 미리보기 값. 실제 링크에서는 비어 있음 (SDK·전화·문자 호출 안 함). */
@@ -523,6 +526,12 @@
       desktop:     { tag: '방문 장소', title: '길안내는 휴대폰에서 시작해 주세요', detail: '이 페이지의 링크를 휴대폰으로 보내 열어 주세요.', icon: 'desktop', cta: '안내 링크 복사하기', sub: '휴대폰으로 보내서 열어 주세요', action: 'copylink', buttonIcon: 'copy' },
       launcherror: { tag: '방문 장소', title: '카카오내비를 열지 못했어요', detail: '앱 설치 여부를 확인한 뒤 다시 눌러 주세요.', icon: 'alert', tone: 'error', cta: '카카오내비 다시 열기', sub: '앱 설치 후 다시 눌러 주세요', action: 'navigate', buttonIcon: 'go' }
     };
+
+    if (isIOS) {
+      STATES.ready.sub = "누른 뒤 확인창에서 '열기'를 선택하세요";
+      STATES.opening.title = "확인창에서 '열기'를 눌러 주세요";
+      STATES.opening.detail = "'카카오내비에서 이 페이지를 열겠습니까?'가 뜨면 열기를 누르면 바로 안내가 시작돼요.";
+    }
 
     function renderState(state) {
       const model = STATES[state] || STATES.sdkerror;
@@ -695,7 +704,7 @@
         displayCoordinates();
         renderState(isMobile ? 'ready' : 'desktop');
         /* 휴대폰에서 처음 준비되면 카카오내비를 1회 자동 실행 */
-        if (isMobile && CONFIG.autoOpen && !autoOpened) { autoOpened = true; startNavi(); }
+        if (isMobile && CONFIG.autoOpen && (!isIOS || CONFIG.autoOpenOnIOS) && !autoOpened) { autoOpened = true; startNavi(); }
       }
       function searchAddress() {
         if (token !== requestId) return;
