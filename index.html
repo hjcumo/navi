@@ -205,20 +205,16 @@
     .help-content p + p { margin-top: 7px; }
     .help-content b { color: var(--ink); font-weight: 700; }
 
-    /* ── 하단 서명 ── */
-    .sig { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); scroll-margin: 24px; }
-    .sig-k { display: block; margin-bottom: 2px; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-    .sig-n { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 800; letter-spacing: 0; }
-    .sig-n::before { content: ""; width: 6px; height: 6px; border-radius: 1px; background: var(--orange); transform: rotate(45deg); }
-    .sig-act { display: flex; gap: 8px; }
-    .ic { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--soft); color: var(--muted); text-decoration: none; transition: transform 130ms ease, background 200ms, color 200ms; }
-    .ic .icon { width: 18px; height: 18px; }
-    .sig.attn .sig-k { color: var(--error-ink); }
-    .sig.attn .ic { background: var(--orange); color: #fff; }
-    .sig.flash .ic { animation: pop .45s ease-out 2; }
-
-    .footer { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 18px 0 0; color: var(--muted); font-size: 11px; }
-    .footer .icon { width: 13px; height: 13px; }
+    /* ── 하단: 작고 차분한 문의 · 저작권 ── */
+    .sig { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); text-align: center; color: var(--muted); scroll-margin: 24px; }
+    .sig p { margin: 0; }
+    .sig-line { font-size: 12.5px; line-height: 1.6; }
+    .sig-line .sep { margin: 0 3px; opacity: .6; }
+    .sig-line a { display: inline-block; padding: 8px 2px; margin: -8px 0; color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; transition: color 200ms; }
+    .sig-copy { margin-top: 4px !important; font-size: 11px; opacity: .8; }
+    /* 오류일 때만 연락처를 오렌지로 살짝 강조 */
+    .sig.attn #sigK, .sig.attn a { color: var(--orange); text-decoration-color: currentColor; }
+    .sig.flash a { animation: pop .45s ease-out 2; }
 
     .toast { position: fixed; z-index: 5; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); width: max-content; max-width: calc(100% - 32px); display: flex; align-items: center; gap: 8px; padding: 12px 17px; border-radius: 14px; background: var(--toast); color: var(--toast-ink); font-size: 13px; line-height: 1.5; pointer-events: none; opacity: 0; transform: translate(-50%, 10px); transition: opacity 160ms ease, transform 160ms ease; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -227,10 +223,10 @@
     .no-script p { margin: 0; }
 
     .theme-switch, .copy-button { transition: transform 130ms ease, opacity 130ms ease; }
-    .theme-switch:active, .copy-button:active, .ic:active { transform: scale(.92); }
+    .theme-switch:active, .copy-button:active { transform: scale(.92); }
     .primary-button:active:not(:disabled) { transform: scale(.975); }
     @media (hover: hover) {
-      .theme-switch:hover, .copy-button:hover, .primary-button:hover:not(:disabled), .ic:hover { opacity: .88; }
+      .theme-switch:hover, .copy-button:hover, .primary-button:hover:not(:disabled) { opacity: .88; }
     }
     @media (min-width: 600px) { .page-shell { padding-top: 36px; padding-bottom: 32px; } }
     @media (max-width: 359px) {
@@ -339,13 +335,15 @@
     </section>
 
     <footer class="sig" id="contact">
-      <div><span class="sig-k" id="sigK">System by</span><span class="sig-n">한명국</span></div>
-      <div class="sig-act">
-        <a class="ic call" id="callButton" href="tel:01046912521" data-contact="call" aria-label="시스템 담당 한명국에게 전화"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></a>
-        <a class="ic sms" id="smsButton" href="sms:01046912521" data-contact="sms" aria-label="시스템 담당 한명국에게 문자"><svg class="icon" aria-hidden="true"><use href="#i-message"/></svg></a>
-      </div>
+      <p class="sig-line">
+        <span id="sigK">시스템 문의</span> 한명국
+        <span class="sep" aria-hidden="true">·</span>
+        <a id="callButton" href="tel:01046912521" data-contact="call" aria-label="시스템 담당 한명국에게 전화">전화</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a id="smsButton" href="sms:01046912521" data-contact="sms" aria-label="시스템 담당 한명국에게 문자">문자</a>
+      </p>
+      <p class="sig-copy">Copyright © 2011-2026 한국방제. All rights reserved.</p>
     </footer>
-    <p class="footer"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>출발 전 확인하고, 안전하게 이동하세요.</p>
   </main>
 
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"><svg class="icon" aria-hidden="true"><use id="toastIcon" href="#i-check"/></svg><span id="toastText"></span></div>
@@ -384,6 +382,7 @@
     let requestTimer, toastTimer, copyTimer, previewTimer;
     let autoOpened = false;
     let launchCooldown = false;
+    let leftForApp = false;   // 출발 버튼을 누른 뒤 실제로 다른 앱(내비)으로 넘어갔는지
     const scriptPromises = {};
 
     if (PREVIEW) {
@@ -503,6 +502,7 @@
       missing:     { tag: '정보 필요', title: '링크에 목적지가 없어요', detail: '주소가 포함된 안내 링크를 다시 받으면 바로 출발할 수 있어요.', icon: 'pin', tone: 'error', cta: '담당자에게 문의하기', sub: '아래 연락 버튼으로 이동해요', action: 'contact', buttonIcon: 'message' },
       invalid:     { tag: '위치 확인', title: '목적지 위치가 올바르지 않아요', detail: '정확한 위치가 담긴 링크를 다시 요청해 주세요.', icon: 'pin', tone: 'error', cta: '담당자에게 문의하기', sub: '아래 연락 버튼으로 이동해요', action: 'contact', buttonIcon: 'message' },
       desktop:     { tag: '방문 장소', title: '길안내는 휴대폰에서 시작해 주세요', detail: '이 페이지의 링크를 휴대폰으로 보내 열어 주세요.', icon: 'desktop', cta: '안내 링크 복사하기', sub: '휴대폰으로 보내서 열어 주세요', action: 'copylink', buttonIcon: 'copy' },
+      launched:    { tag: '안내 중', title: '카카오내비로 안내를 시작했어요', detail: '이 화면은 닫아도 돼요. 왼쪽 위 ✕ 를 누르면 이전 앱으로 돌아갑니다.', icon: 'check', cta: '카카오내비 다시 열기', sub: '내비가 꺼졌다면 다시 눌러 주세요', action: 'navigate', buttonIcon: 'go', calm: true },
       launcherror: { tag: '방문 장소', title: '카카오내비를 열지 못했어요', detail: '앱 설치 여부를 확인한 뒤 다시 눌러 주세요.', icon: 'alert', tone: 'error', cta: '카카오내비 다시 열기', sub: '앱 설치 후 다시 눌러 주세요', action: 'navigate', buttonIcon: 'go' }
     };
 
@@ -533,9 +533,10 @@
 
       const attn = model.tone === 'error' || model.action === 'contact';
       $('contact').classList.toggle('attn', attn);
-      $('sigK').textContent = attn ? '문의 · System by' : 'System by';
+      $('sigK').textContent = attn ? '도움이 필요하면' : '시스템 문의';
 
       $('help').hidden = ['ready', 'opening', 'launcherror', 'desktop'].indexOf(currentState) === -1;
+      if (model.calm) btn.dataset.variant = 'secondary';
       if (currentState === 'missing') {
         $('destinationTitle').textContent = '목적지 정보가 없어요';
         $('address').textContent = '받으신 링크에 목적지가 포함되어 있지 않아요.';
@@ -706,9 +707,22 @@
       }
     }
 
+    /* 출발 후 처리
+       웹페이지는 보안 규칙상 스스로 창을 닫을 수 없습니다(스크립트로 연 창만 닫기 가능).
+       AppSheet·카카오톡 같은 앱 안 브라우저도 마찬가지라, 닫기를 한 번 시도하고
+       닫히지 않으면 '안내 시작됨' 화면으로 바꿔 ✕ 로 닫으면 된다고 알려 줍니다. */
+    function tryClose() {
+      try { window.close(); } catch (e) {}
+    }
     document.addEventListener('visibilitychange', function () {
-      /* 카카오내비에서 돌아오면 '연결 중' 안내 대신 출발 화면으로 */
-      if (!PREVIEW && !document.hidden && currentState === 'opening') renderState('ready');
+      if (PREVIEW) return;
+      if (document.hidden) {
+        if (currentState === 'opening') leftForApp = true;
+        return;
+      }
+      if (currentState !== 'opening') return;
+      if (leftForApp) { leftForApp = false; renderState('launched'); tryClose(); }
+      else renderState('ready');
     });
     window.addEventListener('offline', function () {
       if (PREVIEW || ['missing', 'invalid'].indexOf(currentState) !== -1) return;
