@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>카카오내비 길안내</title>
+    <!-- 카카오 JavaScript SDK (카카오내비 실행용) -->
+    <script
+      src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.4/kakao.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      :root {
+        --bg: #f6f7f9;
+        --card: #fff;
+        --ink: #1d1d1f;
+        --sub: #6b7280;
+        --accent: #fee500;
+        --line: #e5e7eb;
+        --err: #c62828;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111;
+          --card: #1c1c1e;
+          --ink: #f2f2f2;
+          --sub: #a1a1aa;
+          --line: #2c2c2e;
+          --err: #ef9a9a;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+          "Malgun Gothic", sans-serif;
+      }
+      main {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 32px 16px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 24px 20px;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0 0 8px;
+        line-height: 1.4;
+        word-break: keep-all;
+      }
+      #addr {
+        color: var(--sub);
+        font-size: 15px;
+        margin: 0 0 24px;
+        line-height: 1.5;
+      }
+      button {
+        width: 100%;
+        border: 0;
+        border-radius: 12px;
+        padding: 18px;
+        font-size: 18px;
+        font-weight: 700;
+        background: var(--accent);
+        color: #191919;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.45;
+      }
+      #msg {
+        font-size: 14px;
+        color: var(--sub);
+        margin: 16px 0 0;
+        min-height: 20px;
+        line-height: 1.5;
+      }
+      #msg.err {
+        color: var(--err);
+      }
+      .alt {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: var(--sub);
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="card">
+        <h1 id="title">목적지 확인 중…</h1>
+        <p id="addr"></p>
+        <button id="go" disabled>카카오내비로 안내 시작</button>
+        <p id="msg"></p>
+        <a id="kakaomap" class="alt" href="#">카카오맵으로 열기</a>
+      </div>
+    </main>
+
+    <script>
+      // ▼▼▼ 여기만 바꾸세요: 카카오디벨로퍼스 [앱] > [플랫폼 키] > [JavaScript 키] 값 ▼▼▼
+      const JS_KEY = "3481cdf4ec96ad372e2440d8e832bcf0";
+      // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+      // 사용 예: https://아이디.github.io/navi/?name=현장명&addr=서울특별시 강남구 테헤란로27길 40
+      // 좌표를 알고 있으면 ?name=현장명&lat=37.5&lng=127.0 처럼 보내도 됩니다 (주소 변환 생략).
+      const q = new URLSearchParams(location.search);
+      const addr = (q.get("addr") || "").trim();
+      const name = (q.get("name") || "").trim() || addr || "목적지";
+      const lat = q.get("lat"),
+        lng = q.get("lng");
+
+      const $ = (id) => document.getElementById(id);
+      const say = (text, isErr) => {
+        $("msg").textContent = text;
+        $("msg").className = isErr ? "err" : "";
+      };
+
+      $("title").textContent = name;
+      $("addr").textContent = addr;
+      $("kakaomap").href =
+        "https://map.kakao.com/link/search/" + encodeURIComponent(addr || name);
+
+      function startNavi(x, y) {
+        try {
+          Kakao.Navi.start({
+            name: name,
+            x: Number(x),
+            y: Number(y),
+            coordType: "wgs84",
+          });
+          say(
+            "카카오내비를 여는 중입니다. 열리지 않으면 위 버튼을 눌러주세요.",
+          );
+        } catch (e) {
+          say("카카오내비 실행 실패: " + e.message, true);
+        }
+      }
+
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      function ready(x, y) {
+        $("go").disabled = false;
+        $("go").onclick = () => startNavi(x, y);
+        if (!isMobile) {
+          say(
+            "목적지를 찾았습니다. (설정 정상 · 좌표 " +
+              Number(y).toFixed(5) +
+              ", " +
+              Number(x).toFixed(5) +
+              ") 카카오내비 실행은 휴대폰에서만 됩니다.",
+          );
+          return;
+        }
+        say("목적지를 찾았습니다.");
+        startNavi(x, y); // 자동 실행 1회 (휴대폰에 따라 버튼을 한 번 더 눌러야 할 수 있음)
+      }
+
+      if (typeof Kakao === "undefined") {
+        say(
+          "카카오 SDK를 불러오지 못했습니다. 인터넷 연결을 확인하세요.",
+          true,
+        );
+      } else {
+        try {
+          if (!Kakao.isInitialized()) Kakao.init(JS_KEY);
+        } catch (e) {
+          say("JavaScript 키 설정을 확인하세요: " + e.message, true);
+        }
+
+        if (lat && lng) {
+          ready(lng, lat);
+        } else if (!addr) {
+          say(
+            "주소가 전달되지 않았습니다. 링크에 addr= 값이 있는지 확인하세요.",
+            true,
+          );
+        } else {
+          // 카카오맵 SDK로 주소 → 좌표 변환 (JavaScript 키 사용, REST 키 노출 없음)
+          const s = document.createElement("script");
+          s.src =
+            "https://dapi.kakao.com/v2/maps/sdk.js?appkey=" +
+            JS_KEY +
+            "&libraries=services&autoload=false";
+          s.onerror = () =>
+            say(
+              "카카오맵 SDK를 불러오지 못했습니다. [카카오맵 사용 설정]과 [JavaScript SDK 도메인] 등록을 확인하세요.",
+              true,
+            );
+          s.onload = () =>
+            kakao.maps.load(() => {
+              const OK = kakao.maps.services.Status.OK;
+              new kakao.maps.services.Geocoder().addressSearch(
+                addr,
+                (res, status) => {
+                  if (status === OK && res.length)
+                    return ready(res[0].x, res[0].y);
+                  // 주소로 못 찾으면 키워드(장소명) 검색으로 한 번 더 시도
+                  new kakao.maps.services.Places().keywordSearch(
+                    addr,
+                    (res2, status2) => {
+                      if (status2 === OK && res2.length)
+                        return ready(res2[0].x, res2[0].y);
+                      say(
+                        "주소를 찾지 못했습니다. 주소 표기를 확인하거나 아래 카카오맵으로 열기를 이용하세요.",
+                        true,
+                      );
+                    },
+                  );
+                },
+              );
+            });
+          document.head.appendChild(s);
+        }
+      }
+    </script>
+  </body>
+</html>
