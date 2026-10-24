@@ -639,11 +639,13 @@
       return scriptPromises[id];
     }
     function loadNaviSDK() {
-      const loaded = window.Kakao && window.Kakao.Navi ? Promise.resolve() : loadScript('kakao-navi-sdk', CONFIG.sdkUrl);
+      const loaded = window.Kakao ? Promise.resolve() : loadScript('kakao-navi-sdk', CONFIG.sdkUrl);
       return loaded.then(function () {
-        if (!window.Kakao || !Kakao.Navi) { delete scriptPromises['kakao-navi-sdk']; throw new Error('Kakao Navi SDK unavailable'); }
+        if (!window.Kakao) { delete scriptPromises['kakao-navi-sdk']; throw new Error('Kakao SDK unavailable'); }
+        /* SDK 2.x는 init()을 먼저 해야 Kakao.Navi가 생깁니다. 반드시 init → Navi 확인 순서 */
         if (!Kakao.isInitialized()) Kakao.init(CONFIG.jsKey);
         if (!Kakao.isInitialized()) throw new Error('Kakao initialization failed');
+        if (!Kakao.Navi) throw new Error('Kakao Navi unavailable');
       });
     }
     function loadMapServices() {
