@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f5f5ef" id="themeColor">
+  <meta name="theme-color" content="#f6f7fb" id="themeColor">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%2240%20106%20270%20212%22%3E%3Crect%20x%3D%2240%22%20y%3D%22106%22%20width%3D%22270%22%20height%3D%22212%22%20rx%3D%2240%22%20fill%3D%22%23fff%22/%3E%3Cpath%20fill%3D%22%23262161%22%20d%3D%22M262.01%2C202.07v-40.66h-90.45v101.38h108.51v-60.72h-18.06ZM262.01%2C242.54h-72.39v-60.9h54.33v20.42h0v20.24h18.06v20.24Z%22/%3E%3Cpolygon%20fill%3D%22%23262161%22%20points%3D%2290.38%20202.07%2090.38%20161.41%2070.14%20161.41%2070.14%20262.78%2090.38%20262.78%2090.38%20222.3%20134.31%20222.3%20134.31%20202.07%2090.38%20202.07%22/%3E%3Crect%20fill%3D%22%23f15a28%22%20x%3D%22201.1%22%20y%3D%22202.07%22%20width%3D%2230.17%22%20height%3D%2220.24%22/%3E%3Cpolygon%20fill%3D%22%23f15a28%22%20points%3D%22139.54%20161.41%20139.54%20262.78%20159.78%20262.78%20159.78%20161.41%22/%3E%3C/svg%3E">
   <meta name="color-scheme" content="light dark">
   <meta name="description" content="현장 목적지를 확인하고 카카오내비로 간편하게 출발하세요.">
   <title>현장 길안내</title>
@@ -20,66 +21,57 @@
     })();
   </script>
   <style>
-    /* 저사양 폰 배려: 시스템 글꼴 + 인라인 SVG만 사용. 웹폰트·이미지·블러 없음.
-       움직임은 모두 transform/opacity 애니메이션이라 GPU 부담이 적습니다. */
+    /* 한국방제 브랜드 컬러: 네이비 #262161 · 오렌지 #f15a28
+       저사양 폰 배려: 시스템 글꼴 + 인라인 SVG만 사용, 웹폰트·이미지·블러 없음.
+       움직임은 모두 transform/opacity라 가볍습니다. */
     :root {
       color-scheme: light;
-      --page: #f5f5ef;
+      --navy: #262161;
+      --orange: #f15a28;
+      --page: #f6f7fb;
       --surface: #ffffff;
-      --ink: #193a32;
-      --muted: #64736c;
-      --line: #dfe5dc;
-      --soft: #edf1e9;
-      --green-text: #28624f;
-      --hero: #1f4a3e;
-      --hero-ink: #ffffff;
-      --hero-muted: #cfe0d5;
-      --hero-line: rgba(255, 255, 255, .16);
-      --yellow: #fee500;
-      --yellow-ink: #1f2414;
-      --cta-glow: rgba(214, 186, 0, .36);
-      --shine: rgba(255, 255, 255, .7);
-      --notice: #edf2e9;
-      --notice-ink: #365c48;
-      --error-bg: #fbefea;
-      --error-ink: #95482e;
-      --focus: #397f65;
-      --disabled: #e5e9e0;
-      --disabled-ink: #5c6c60;
-      --toast: #19392f;
-      --call: #2c7a4d;
-      --call-bg: #e4f1e8;
-      --sms: #2f5fb3;
-      --sms-bg: #e8eef9;
-      --radius: 26px;
+      --ink: #1d1b45;
+      --muted: #6c6f86;
+      --line: #e3e5ee;
+      --soft: #eef0f6;
+      --card: #262161;
+      --card-ink: #ffffff;
+      --card-muted: #c3c5e2;
+      --card-line: rgba(255, 255, 255, .14);
+      --mark-a: #262161;
+      --mark-b: #f15a28;
+      --cta: #f15a28;
+      --cta-ink: #ffffff;
+      --cta-glow: rgba(241, 90, 40, .32);
+      --notice: #eef0f6;
+      --notice-ink: #3a3870;
+      --error-bg: #fdefe9;
+      --error-ink: #b8400f;
+      --focus: #f15a28;
+      --toast: #262161;
+      --toast-ink: #ffffff;
+      --radius: 24px;
     }
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --page: #141d19;
-      --surface: #1e2a23;
-      --ink: #edf1e8;
-      --muted: #acb9ad;
-      --line: #35453a;
-      --soft: #2b3b2f;
-      --green-text: #c0dabb;
-      --hero: #264e40;
-      --hero-ink: #f7faf2;
-      --hero-muted: #d1e1d6;
-      --hero-line: rgba(255, 255, 255, .14);
-      --cta-glow: rgba(254, 229, 0, .14);
-      --shine: rgba(255, 255, 255, .6);
-      --notice: #283b2d;
-      --notice-ink: #c2d7b7;
-      --error-bg: #3c2c25;
-      --error-ink: #f3b59d;
-      --focus: #c7dfa9;
-      --disabled: #2c3a2f;
-      --disabled-ink: #b8c4b5;
-      --toast: #e8efd9;
-      --call: #9ad8ae;
-      --call-bg: #24392b;
-      --sms: #abc4f3;
-      --sms-bg: #24304a;
+      --page: #0f1022;
+      --surface: #181a33;
+      --ink: #eceef8;
+      --muted: #a2a5bf;
+      --line: #2b2e4d;
+      --soft: #20233f;
+      --card: #24215c;
+      --card-ink: #ffffff;
+      --card-muted: #c3c5e2;
+      --card-line: rgba(255, 255, 255, .12);
+      --mark-a: #eceef8;
+      --cta-glow: rgba(241, 90, 40, .22);
+      --notice: #20233f;
+      --notice-ink: #c9cbe8;
+      --error-bg: #3a2019;
+      --error-ink: #ffb393;
+      --toast: #eceef8;
+      --toast-ink: #1d1b45;
     }
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
@@ -91,6 +83,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Noto Sans KR", sans-serif;
       font-size: 16px;
       line-height: 1.5;
+      letter-spacing: -.02em;
       -webkit-font-smoothing: antialiased;
     }
     button, a, summary { -webkit-tap-highlight-color: transparent; }
@@ -98,7 +91,7 @@
     button:disabled { cursor: default; }
     button, a { touch-action: manipulation; }
     a { color: inherit; }
-    button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+    button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
     svg { display: block; flex: none; }
     .icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .icon.fill { fill: currentColor; stroke: none; }
@@ -107,138 +100,129 @@
     /* ── 페이지 ── */
     .page-shell {
       width: 100%;
-      max-width: 464px;
+      max-width: 460px;
       margin: 0 auto;
-      padding: calc(20px + env(safe-area-inset-top)) 22px calc(22px + env(safe-area-inset-bottom));
+      padding: calc(18px + env(safe-area-inset-top)) 20px calc(22px + env(safe-area-inset-bottom));
       animation: arrive 260ms ease-out both;
     }
-    .app-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .brand { display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 750; letter-spacing: -.035em; }
-    .brand-mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--ink); color: var(--page); }
-    .brand-mark .icon { width: 19px; height: 19px; }
-    .theme-switch { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--ink); }
-    .theme-switch .icon { width: 18px; height: 18px; }
+    .app-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-size: 14px; font-weight: 700; color: var(--muted); }
+    .hb { width: 46px; height: 22px; }
+    .hb-a { fill: var(--mark-a); }
+    .hb-b { fill: var(--mark-b); }
+    .brand-div { width: 1px; height: 14px; background: var(--line); }
+    .theme-switch { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--soft); color: var(--ink); }
+    .theme-switch .icon { width: 17px; height: 17px; }
 
-    .intro { margin: 26px 0 20px; }
-    .eyebrow { margin: 0 0 8px; font-size: 11px; font-weight: 650; color: var(--muted); letter-spacing: .06em; }
-    .intro-title { margin: 0; font-size: 30px; line-height: 1.28; font-weight: 800; letter-spacing: -.065em; word-break: keep-all; }
-    .intro-title span { color: var(--green-text); }
-    .intro-description { margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: var(--muted); letter-spacing: -.03em; }
-
-    /* ── 목적지 카드: 현재 위치 → 도착지 경로 ── */
+    /* ── 목적지 카드: 현재 위치 → 도착지 ── */
     .destination {
       position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      padding: 22px 22px 18px;
+      padding: 20px 20px 16px;
       border-radius: var(--radius);
-      background: var(--hero);
-      color: var(--hero-ink);
+      background: var(--card);
+      color: var(--card-ink);
     }
-    .route-art { position: absolute; top: 0; right: 0; width: 142px; height: 122px; color: #9cc4a6; opacity: .2; z-index: -1; pointer-events: none; }
-    .destination-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
-    .destination-label { display: flex; align-items: center; gap: 7px; margin: 0; color: var(--hero-muted); font-size: 12px; font-weight: 650; }
-    .destination-label .icon { width: 16px; height: 16px; }
-    .destination-tag { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--hero-line); border-radius: 20px; padding: 4px 10px; font-size: 10.5px; font-weight: 650; color: var(--hero-muted); line-height: 1.4; }
-    .destination-tag::before { content: ""; width: 5px; height: 5px; background: var(--yellow); border-radius: 50%; }
+    .destination-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .destination-label { margin: 0; font-size: 12px; font-weight: 600; color: var(--card-muted); }
+    .destination-tag { display: inline-flex; align-items: center; gap: 6px; border-radius: 20px; padding: 4px 10px; background: var(--card-line); font-size: 11px; font-weight: 600; color: var(--card-ink); line-height: 1.4; }
+    .destination-tag::before { content: ""; width: 5px; height: 5px; background: var(--orange); border-radius: 50%; }
 
-    .trip { display: grid; grid-template-columns: 24px minmax(0, 1fr); column-gap: 13px; align-items: center; margin-bottom: 20px; }
-    .from-dot { justify-self: center; width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid var(--hero-muted); }
-    .from-text { margin: 0; font-size: 13px; font-weight: 600; color: var(--hero-muted); }
-    .rail { justify-self: center; width: 3px; height: 38px; margin: 7px 0; border-radius: 3px; background: var(--yellow); transform-origin: top; }
-    .trip .pin { justify-self: center; align-self: start; margin-top: 5px; width: 22px; height: 28px; color: var(--yellow); }
-    .trip .pin .dot { fill: var(--hero); }
-    .destination h1 { margin: 0; font-size: 27px; font-weight: 800; line-height: 1.38; letter-spacing: -.055em; word-break: keep-all; overflow-wrap: anywhere; }
+    .trip { display: grid; grid-template-columns: 22px minmax(0, 1fr); column-gap: 12px; align-items: center; margin-bottom: 18px; }
+    .from-dot { justify-self: center; width: 12px; height: 12px; border-radius: 50%; border: 2.5px solid var(--card-muted); }
+    .from-text { margin: 0; font-size: 13px; font-weight: 500; color: var(--card-muted); }
+    .rail { justify-self: center; width: 2.5px; height: 34px; margin: 6px 0; border-radius: 3px; background: var(--orange); transform-origin: top; }
+    .trip .pin { justify-self: center; align-self: start; margin-top: 5px; width: 20px; height: 26px; color: var(--orange); }
+    .trip .pin .dot { fill: var(--card); }
+    .destination h1 { margin: 0; font-size: 25px; font-weight: 800; line-height: 1.36; letter-spacing: -.05em; word-break: keep-all; overflow-wrap: anywhere; }
 
-    .address-block { display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--hero-line); padding-top: 15px; }
+    .address-block { display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--card-line); padding-top: 14px; }
     .address-text { flex: 1; min-width: 0; }
-    .address { margin: 0; color: var(--hero-muted); font-size: 13.5px; line-height: 1.7; letter-spacing: -.015em; word-break: keep-all; overflow-wrap: anywhere; user-select: text; -webkit-user-select: text; }
-    .coordinates { margin: 3px 0 0; color: var(--hero-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
-    .copy-button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; flex: none; min-width: 48px; min-height: 48px; border: 1px solid var(--hero-line); border-radius: 13px; padding: 6px; background: transparent; color: var(--hero-ink); font-size: 9.5px; line-height: 1.4; }
-    .copy-button .icon { width: 16px; height: 16px; }
+    .address { margin: 0; color: var(--card-muted); font-size: 13.5px; line-height: 1.65; word-break: keep-all; overflow-wrap: anywhere; user-select: text; -webkit-user-select: text; }
+    .coordinates { margin: 3px 0 0; color: var(--card-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+    .copy-button { display: flex; align-items: center; gap: 5px; flex: none; height: 34px; padding: 0 12px; border: 0; border-radius: 17px; background: var(--card-line); color: var(--card-ink); font-size: 12px; font-weight: 600; }
+    .copy-button .icon { width: 14px; height: 14px; }
 
-    /* 경로 움직임: 찾는 중엔 선이 늘었다 줄고, 찾으면 선이 그어진 뒤 핀이 떨어짐 */
     body[data-phase="loading"] .rail { animation: draw 1.1s ease-in-out infinite alternate; }
     body[data-phase="loading"] .trip .pin { animation: bob 1.1s ease-in-out infinite; }
     body[data-phase="ok"] .rail { animation: grow .5s ease-out both; }
     body[data-phase="ok"] .trip .pin { animation: drop .45s cubic-bezier(.3, 1.5, .5, 1) .35s both; }
-    body[data-phase="fail"] .rail, body[data-phase="fail"] .trip .pin { opacity: .3; }
+    body[data-phase="fail"] .rail, body[data-phase="fail"] .trip .pin { opacity: .35; }
 
     /* ── 상태 안내 + 출발 버튼 ── */
-    .navigation { margin-top: 14px; }
-    .status-panel { display: flex; align-items: flex-start; gap: 10px; background: var(--notice); color: var(--notice-ink); border-radius: 16px; padding: 14px 15px; margin: 0 0 12px; animation: arrive .22s ease-out both; }
+    .navigation { margin-top: 12px; }
+    .status-panel { display: flex; align-items: flex-start; gap: 10px; background: var(--notice); color: var(--notice-ink); border-radius: 16px; padding: 13px 15px; margin: 0 0 10px; animation: arrive .22s ease-out both; }
     .status-panel[data-tone="error"] { background: var(--error-bg); color: var(--error-ink); }
     .status-panel > .icon { width: 18px; height: 18px; margin-top: 2px; }
     .status-copy { min-width: 0; }
-    .status-title { margin: 0; font-size: 13.5px; line-height: 1.5; font-weight: 750; letter-spacing: -.035em; }
-    .status-description { margin: 3px 0 0; font-size: 12px; line-height: 1.65; word-break: keep-all; overflow-wrap: anywhere; }
+    .status-title { margin: 0; font-size: 13.5px; line-height: 1.5; font-weight: 700; }
+    .status-description { margin: 2px 0 0; font-size: 12px; line-height: 1.6; opacity: .9; word-break: keep-all; overflow-wrap: anywhere; }
 
     .primary-button {
       position: relative;
       display: flex;
       align-items: center;
-      gap: 13px;
+      gap: 12px;
       width: 100%;
-      min-height: 70px;
+      min-height: 64px;
       border: 0;
-      border-radius: 19px;
-      padding: 10px 18px 10px 10px;
-      background: var(--yellow);
-      color: var(--yellow-ink);
+      border-radius: 18px;
+      padding: 9px 18px 9px 9px;
+      background: var(--cta);
+      color: var(--cta-ink);
       text-align: left;
       transition: transform 130ms ease, box-shadow 200ms ease, opacity 200ms ease;
     }
-    .primary-button[data-variant="primary"]:not(:disabled) { box-shadow: 0 8px 22px var(--cta-glow); }
-    .primary-button:disabled { opacity: .78; }
-    .cta-ico { position: relative; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 15px; background: var(--yellow-ink); color: var(--yellow); flex: none; }
-    .cta-ico .icon { width: 22px; height: 22px; }
-    .cta-txt { position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-    .cta-txt strong { font-size: 16.5px; font-weight: 800; line-height: 1.35; letter-spacing: -.045em; overflow-wrap: anywhere; }
-    .cta-txt small { font-size: 12px; line-height: 1.4; opacity: .68; letter-spacing: -.02em; }
-    .cta-arrow { position: relative; width: 18px; height: 18px; opacity: .6; }
+    .primary-button[data-variant="primary"]:not(:disabled) { box-shadow: 0 8px 20px var(--cta-glow); }
+    .primary-button:disabled { opacity: .8; }
+    .cta-ico { position: relative; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; background: rgba(255, 255, 255, .2); color: #fff; flex: none; }
+    .cta-ico .icon { width: 21px; height: 21px; }
+    .cta-txt { position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .cta-txt strong { font-size: 17px; font-weight: 800; line-height: 1.35; letter-spacing: -.04em; overflow-wrap: anywhere; }
+    .cta-txt small { font-size: 12px; line-height: 1.4; opacity: .82; }
+    .cta-arrow { position: relative; width: 18px; height: 18px; opacity: .85; }
     .primary-button:disabled .cta-arrow { display: none; }
-    .spinner { width: 20px; height: 20px; border: 2.5px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin 900ms linear infinite; }
-    /* 재시도·문의 같은 보조 동작은 차분한 색 */
-    .primary-button[data-variant="secondary"] { background: var(--soft); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
-    .primary-button[data-variant="secondary"] .cta-ico { background: var(--surface); color: var(--green-text); }
+    .spinner { width: 19px; height: 19px; border: 2.5px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin 900ms linear infinite; }
+    .primary-button[data-variant="secondary"] { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+    .primary-button[data-variant="secondary"] .cta-ico { background: var(--soft); color: var(--navy); }
+    :root[data-theme="dark"] .primary-button[data-variant="secondary"] .cta-ico { color: var(--ink); }
 
-    /* 출발 준비 완료일 때만: 파동 + 빛 + 아이콘 숨쉬기 + 화살표 밀기 */
-    .primary-button::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--yellow); opacity: 0; pointer-events: none; }
+    /* 출발 준비 완료일 때만: 파동 + 빛 + 아이콘 + 화살표 움직임 */
+    .primary-button::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--cta); opacity: 0; pointer-events: none; }
     .shine { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
-    .shine::before { content: ""; position: absolute; top: 0; bottom: 0; left: -45%; width: 35%; background: linear-gradient(100deg, transparent, var(--shine), transparent); opacity: 0; transform: skewX(-20deg); }
+    .shine::before { content: ""; position: absolute; top: 0; bottom: 0; left: -45%; width: 35%; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .45), transparent); opacity: 0; transform: skewX(-20deg); }
     body[data-state="ready"] .primary-button::after { animation: ring 2.2s ease-out .5s infinite; }
     body[data-state="ready"] .shine::before { animation: sweep 3.4s ease-in-out 1s infinite; }
     body[data-state="ready"] .cta-ico .icon { animation: breathe 2.2s ease-in-out .5s infinite; }
     body[data-state="ready"] .cta-arrow { animation: nudge 1.4s ease-in-out infinite; }
 
-    .help { margin: 4px 0 0; }
-    .help summary { list-style: none; display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 10px 4px; font-size: 11.5px; color: var(--muted); cursor: pointer; }
+    .help { margin: 2px 0 0; }
+    .help summary { list-style: none; display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 10px 4px; font-size: 12px; color: var(--muted); cursor: pointer; }
     .help summary::-webkit-details-marker { display: none; }
     .help summary .icon { width: 13px; height: 13px; transition: transform 130ms ease; }
     .help[open] summary .icon { transform: rotate(180deg); }
-    .help-content { padding: 13px 15px; border: 1px solid var(--line); border-radius: 14px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .help-content { padding: 14px 15px; border-radius: 14px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); font-size: 12.5px; line-height: 1.75; }
     .help-content p { margin: 0; }
-    .help-content p + p { margin-top: 6px; }
+    .help-content p + p { margin-top: 7px; }
+    .help-content b { color: var(--ink); font-weight: 700; }
 
-    /* ── 하단 서명 (시스템 담당) ── */
+    /* ── 하단 서명 ── */
     .sig { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); scroll-margin: 24px; }
-    .sig-k { display: block; margin-bottom: 3px; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-    .sig-n { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 800; letter-spacing: .02em; }
-    .sig-n::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--yellow); transform: rotate(45deg); }
+    .sig-k { display: block; margin-bottom: 2px; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .sig-n { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 800; letter-spacing: 0; }
+    .sig-n::before { content: ""; width: 6px; height: 6px; border-radius: 1px; background: var(--orange); transform: rotate(45deg); }
     .sig-act { display: flex; gap: 8px; }
-    .ic { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--muted); text-decoration: none; transition: transform 130ms ease, background 200ms, color 200ms, border-color 200ms; }
+    .ic { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--soft); color: var(--muted); text-decoration: none; transition: transform 130ms ease, background 200ms, color 200ms; }
     .ic .icon { width: 18px; height: 18px; }
     .sig.attn .sig-k { color: var(--error-ink); }
-    .sig.attn .ic.call { background: var(--call-bg); border-color: transparent; color: var(--call); }
-    .sig.attn .ic.sms { background: var(--sms-bg); border-color: transparent; color: var(--sms); }
+    .sig.attn .ic { background: var(--orange); color: #fff; }
     .sig.flash .ic { animation: pop .45s ease-out 2; }
 
-    .footer { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 20px 0 0; color: var(--muted); font-size: 10.5px; letter-spacing: -.015em; }
+    .footer { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 18px 0 0; color: var(--muted); font-size: 11px; }
     .footer .icon { width: 13px; height: 13px; }
 
-    .toast { position: fixed; z-index: 5; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); width: max-content; max-width: calc(100% - 32px); display: flex; align-items: center; gap: 8px; padding: 12px 17px; border-radius: 15px; background: var(--toast); color: var(--page); font-size: 12.5px; line-height: 1.6; pointer-events: none; opacity: 0; transform: translate(-50%, 10px); transition: opacity 160ms ease, transform 160ms ease; }
+    .toast { position: fixed; z-index: 5; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); width: max-content; max-width: calc(100% - 32px); display: flex; align-items: center; gap: 8px; padding: 12px 17px; border-radius: 14px; background: var(--toast); color: var(--toast-ink); font-size: 13px; line-height: 1.5; pointer-events: none; opacity: 0; transform: translate(-50%, 10px); transition: opacity 160ms ease, transform 160ms ease; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
-    .toast .icon { width: 16px; height: 16px; }
+    .toast .icon { width: 16px; height: 16px; color: var(--orange); }
     .no-script { border-radius: 16px; background: var(--error-bg); color: var(--error-ink); padding: 15px; margin: 0 0 16px; font-size: 13px; }
     .no-script p { margin: 0; }
 
@@ -248,13 +232,12 @@
     @media (hover: hover) {
       .theme-switch:hover, .copy-button:hover, .primary-button:hover:not(:disabled), .ic:hover { opacity: .88; }
     }
-    @media (min-width: 600px) { .page-shell { padding-top: 36px; padding-bottom: 32px; } .intro { margin-top: 32px; } }
+    @media (min-width: 600px) { .page-shell { padding-top: 36px; padding-bottom: 32px; } }
     @media (max-width: 359px) {
       .page-shell { padding-left: 16px; padding-right: 16px; }
-      .intro-title { font-size: 27px; }
-      .destination { padding: 20px 18px 16px; }
-      .destination h1 { font-size: 24px; }
-      .cta-txt strong { font-size: 15px; }
+      .destination { padding: 18px 16px 14px; }
+      .destination h1 { font-size: 22px; }
+      .cta-txt strong { font-size: 15.5px; }
     }
 
     @keyframes arrive { from { opacity: 0; transform: translateY(6px); } }
@@ -263,7 +246,7 @@
     @keyframes grow { from { transform: scaleY(0); } }
     @keyframes bob { 50% { transform: translateY(-5px); } }
     @keyframes drop { from { transform: translateY(-14px); opacity: 0; } }
-    @keyframes ring { 0% { opacity: .8; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.05, 1.3); } }
+    @keyframes ring { 0% { opacity: .7; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.05, 1.3); } }
     @keyframes sweep {
       0% { transform: translateX(0) skewX(-20deg); opacity: 1; }
       35% { transform: translateX(470%) skewX(-20deg); opacity: 1; }
@@ -273,9 +256,7 @@
     @keyframes nudge { 50% { transform: translateX(4px); } }
     @keyframes pop { 50% { transform: scale(1.15); } }
 
-    /* 폰에서 '동작 줄이기'를 켠 경우 모든 움직임 끔 */
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
-    /* 데이터 절약·메모리 2GB 이하 폰: 버튼 누름 효과 등은 그대로 두고, 계속 반복되는 장식만 끔 */
     .reduced-effects .shine::before,
     .reduced-effects .primary-button::after,
     .reduced-effects .cta-ico .icon,
@@ -305,22 +286,15 @@
 
   <main class="page-shell">
     <header class="app-header">
-      <div class="brand"><span class="brand-mark" aria-hidden="true"><svg class="icon"><use href="#i-route"/></svg></span>현장 길안내</div>
+      <div class="brand"><svg class="hb" viewBox="70.14 161.41 209.93 101.37" role="img" aria-label="한국방제"><path class="hb-a" d="M262.01,202.07v-40.66h-90.45v101.38h108.51v-60.72h-18.06ZM262.01,242.54h-72.39v-60.9h54.33v20.42h0v20.24h18.06v20.24Z"/><polygon class="hb-a" points="90.38 202.07 90.38 161.41 70.14 161.41 70.14 262.78 90.38 262.78 90.38 222.3 134.31 222.3 134.31 202.07 90.38 202.07"/><rect class="hb-b" x="201.1" y="202.07" width="30.17" height="20.24"/><polygon class="hb-b" points="139.54 161.41 139.54 262.78 159.78 262.78 159.78 161.41"/></svg><i class="brand-div" aria-hidden="true"></i>현장 길안내</div>
       <button type="button" class="theme-switch" id="themeSwitch" aria-label="어두운 화면으로 변경" aria-pressed="false"><svg class="icon" aria-hidden="true"><use id="themeIcon" href="#i-moon"/></svg></button>
     </header>
-
-    <div class="intro">
-      <p class="eyebrow">오늘도, 안전한 이동</p>
-      <p class="intro-title">현장까지,<br><span>간편하게.</span></p>
-      <p class="intro-description">목적지를 확인하고 길안내를 시작하세요.</p>
-    </div>
 
     <noscript><style>.navigation{display:none}</style><div class="no-script"><p>길안내를 이용하려면 브라우저의 JavaScript를 켜 주세요. 아래 연락 버튼으로 시스템 담당자에게 문의할 수 있어요.</p></div></noscript>
 
     <section class="destination" id="destination" aria-labelledby="destinationTitle" aria-busy="true">
-      <svg class="route-art" viewBox="0 0 142 122" fill="none" aria-hidden="true"><path d="M156 15H88c-27 0-27 39 0 39h17c32 0 32 40 0 40H67" stroke="currentColor" stroke-width="1.5"/><path d="M152 3H84c-45 0-45 63 0 63h19c14 0 14 16 0 16H59" stroke="currentColor" stroke-width="1.5"/><circle cx="57" cy="88" r="11" stroke="currentColor" stroke-width="1.5"/><circle cx="57" cy="88" r="3" fill="currentColor"/></svg>
       <div class="destination-top">
-        <p class="destination-label"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>방문할 목적지</p>
+        <p class="destination-label">목적지</p>
         <span class="destination-tag" id="destinationTag">확인 중</span>
       </div>
 
@@ -335,7 +309,7 @@
 
       <div class="address-block">
         <div class="address-text"><p class="address" id="address">전달받은 목적지를 확인하고 있어요.</p><p class="coordinates" id="coordinates" hidden></p></div>
-        <button type="button" id="copyAddress" class="copy-button" aria-label="목적지 주소 복사" hidden><svg class="icon" aria-hidden="true"><use id="copyIcon" href="#i-copy"/></svg><span id="copyLabel">주소 복사</span></button>
+        <button type="button" id="copyAddress" class="copy-button" aria-label="목적지 주소 복사" hidden><svg class="icon" aria-hidden="true"><use id="copyIcon" href="#i-copy"/></svg><span id="copyLabel">복사</span></button>
       </div>
     </section>
 
@@ -440,7 +414,7 @@
       const dark = document.documentElement.dataset.theme === 'dark';
       $('themeSwitch').setAttribute('aria-pressed', String(dark));
       $('themeSwitch').setAttribute('aria-label', dark ? '밝은 화면으로 변경' : '어두운 화면으로 변경');
-      $('themeColor').content = dark ? '#141d19' : '#f5f5ef';
+      $('themeColor').content = dark ? '#0f1022' : '#f6f7fb';
       setIcon('themeIcon', dark ? 'sun' : 'moon');
     }
     $('themeSwitch').addEventListener('click', function () {
@@ -487,9 +461,9 @@
     function copiedFeedback(hold) {
       clearTimeout(copyTimer);
       setIcon('copyIcon', 'check');
-      $('copyLabel').textContent = '복사 완료';
+      $('copyLabel').textContent = '완료';
       showToast('주소를 복사했어요', hold);
-      if (!hold) copyTimer = setTimeout(function () { setIcon('copyIcon', 'copy'); $('copyLabel').textContent = '주소 복사'; }, 3200);
+      if (!hold) copyTimer = setTimeout(function () { setIcon('copyIcon', 'copy'); $('copyLabel').textContent = '복사'; }, 3200);
     }
     $('copyAddress').addEventListener('click', function () {
       if (!address) return;
