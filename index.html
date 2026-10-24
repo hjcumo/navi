@@ -355,7 +355,12 @@
       </button>
       <details class="help" id="help" hidden>
         <summary>앱이 열리지 않나요?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
-        <div class="help-content"><p><b>아이폰:</b> '카카오내비에서 이 페이지를 열겠습니까?'가 뜨면 <b>열기</b>를 눌러 주세요. 확인창 없이 카카오 안내 페이지가 보이면 <b>앱 실행하기</b>를 누르면 됩니다.</p><p>휴대폰에 카카오내비가 설치되어 있는지 확인한 뒤 출발 버튼을 다시 눌러 주세요.</p><p>카카오톡 안에서 열리지 않으면 브라우저로 이 링크를 열어 주세요. 도움이 필요하면 아래 연락 버튼으로 문의해 주세요.</p></div>
+        <div class="help-content">
+          <p>카카오내비가 설치되어 있는지 확인한 뒤 출발 버튼을 다시 눌러 주세요.</p>
+          <p><b>아이폰</b> · '카카오내비에서 열겠습니까?' 창이 뜨면 <b>열기</b>를, 카카오 안내 페이지가 보이면 <b>앱 실행하기</b>를 눌러 주세요.</p>
+          <p><b>안드로이드</b> · Play 스토어가 열리면 카카오내비를 설치하거나 업데이트한 뒤 다시 눌러 주세요. 앱 선택 창이 뜨면 카카오내비를 골라 주세요.</p>
+          <p>카카오톡 안에서 열리지 않으면 오른쪽 위 메뉴의 '다른 브라우저로 열기'를 이용해 주세요. 그래도 안 되면 아래 연락 버튼으로 문의해 주세요.</p>
+        </div>
       </details>
     </section>
 
@@ -526,12 +531,6 @@
       desktop:     { tag: '방문 장소', title: '길안내는 휴대폰에서 시작해 주세요', detail: '이 페이지의 링크를 휴대폰으로 보내 열어 주세요.', icon: 'desktop', cta: '안내 링크 복사하기', sub: '휴대폰으로 보내서 열어 주세요', action: 'copylink', buttonIcon: 'copy' },
       launcherror: { tag: '방문 장소', title: '카카오내비를 열지 못했어요', detail: '앱 설치 여부를 확인한 뒤 다시 눌러 주세요.', icon: 'alert', tone: 'error', cta: '카카오내비 다시 열기', sub: '앱 설치 후 다시 눌러 주세요', action: 'navigate', buttonIcon: 'go' }
     };
-
-    if (isIOS) {
-      STATES.ready.sub = "누른 뒤 확인창에서 '열기'를 선택하세요";
-      STATES.opening.title = "확인창에서 '열기'를 눌러 주세요";
-      STATES.opening.detail = "'카카오내비에서 이 페이지를 열겠습니까?'가 뜨면 열기를 누르면 바로 안내가 시작돼요.";
-    }
 
     function renderState(state) {
       const model = STATES[state] || STATES.sdkerror;
