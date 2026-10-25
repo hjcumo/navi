@@ -195,12 +195,16 @@
     body[data-state="ready"] .cta-ico .icon { animation: breathe 2.2s ease-in-out .5s infinite; }
     body[data-state="ready"] .cta-arrow { animation: nudge 1.4s ease-in-out infinite; }
 
-    .help { margin: 2px 0 0; }
-    .help summary { list-style: none; display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 48px; padding: 10px 4px; font-size: 14.5px; color: var(--muted); cursor: pointer; }
-    .help summary::-webkit-details-marker { display: none; }
-    .help summary .icon { width: 15px; height: 15px; transition: transform 130ms ease; }
-    .help[open] summary .icon { transform: rotate(180deg); }
-    .help-content { padding: 14px 15px; border-radius: 14px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .sub-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 4px; margin-top: 6px; }
+    .sub-link { display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding: 10px 6px; border: 0; background: none; color: var(--muted); font-size: 15px; white-space: nowrap; text-decoration: none; }
+    .sub-link .icon { width: 17px; height: 17px; }
+    .sub-link.install { color: var(--ink); font-weight: 700; }
+    .sub-link.install { gap: 8px; }
+    .app-ico { width: 24px; height: 24px; border-radius: 6px; flex: none; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06); }
+    .sub-link .chev { width: 15px; height: 15px; transition: transform 130ms ease; }
+    .sub-link[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .sub-sep { width: 1px; height: 14px; background: var(--line); }
+    .help-content { margin-top: 2px; padding: 14px 15px; border-radius: 14px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); font-size: 15px; line-height: 1.7; }
     .help-content p { margin: 0; }
     .help-content p + p { margin-top: 7px; }
     .help-content b { color: var(--ink); font-weight: 700; }
@@ -232,7 +236,7 @@
     .theme-switch:active, .copy-button:active { transform: scale(.92); }
     .primary-button:active:not(:disabled) { transform: scale(.975); }
     @media (hover: hover) {
-      .theme-switch:hover, .copy-button:hover, .primary-button:hover:not(:disabled) { opacity: .88; }
+      .theme-switch:hover, .copy-button:hover, .primary-button:hover:not(:disabled), .sub-link:hover { opacity: .8; }
     }
     @media (min-width: 600px) { .page-shell { padding-top: 36px; padding-bottom: 32px; } }
     @media (max-width: 359px) {
@@ -273,6 +277,7 @@
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
     <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M8.5 3H5a2 2 0 0 0-2 2.2A18 18 0 0 0 18.8 21a2 2 0 0 0 2.2-2v-3.5l-5-1.5-1.7 2a14 14 0 0 1-6.3-6.3L10 8 8.5 3Z"/></symbol>
@@ -331,15 +336,16 @@
         <span class="cta-txt"><strong id="primaryText">길안내 준비 중</strong><small id="primarySub">목적지 위치를 확인하고 있어요</small></span>
         <svg class="icon cta-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
       </button>
-      <details class="help" id="help" hidden>
-        <summary>앱이 열리지 않나요?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
-        <div class="help-content">
-          <p>카카오내비가 설치되어 있는지 확인한 뒤 출발 버튼을 다시 눌러 주세요.</p>
-          <p><b>아이폰</b> · '카카오내비에서 열겠습니까?' 창이 뜨면 <b>열기</b>를, 카카오 안내 페이지가 보이면 <b>앱 실행하기</b>를 눌러 주세요.</p>
-          <p><b>안드로이드</b> · Play 스토어가 열리면 카카오내비를 설치하거나 업데이트한 뒤 다시 눌러 주세요. 앱 선택 창이 뜨면 카카오내비를 골라 주세요.</p>
-          <p>카카오톡 안에서 열리지 않으면 오른쪽 위 메뉴의 '다른 브라우저로 열기'를 이용해 주세요. 그래도 안 되면 아래 연락 버튼으로 문의해 주세요.</p>
-        </div>
-      </details>
+      <div class="sub-actions" id="subActions" hidden>
+        <a class="sub-link install" id="installLink" href="https://apps.apple.com/kr/app/id417698849" target="_blank" rel="noopener"><img class="app-ico" src="data:image/png;base64,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" alt="" width="24" height="24">카카오내비 설치</a>
+        <i class="sub-sep" aria-hidden="true"></i>
+        <button type="button" class="sub-link" id="helpToggle" aria-expanded="false" aria-controls="helpBody">앱이 안 열리나요?<svg class="icon chev" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+      </div>
+      <div class="help-content" id="helpBody" hidden>
+        <p>카카오내비가 없다면 위의 <b>카카오내비 설치</b>를 눌러 설치한 뒤, 출발 버튼을 다시 눌러 주세요.</p>
+        <p><b>아이폰</b> · '카카오내비에서 열겠습니까?' 창이 뜨면 <b>열기</b>를, 카카오 안내 페이지가 보이면 <b>앱 실행하기</b>를 눌러 주세요.</p>
+        <p><b>안드로이드</b> · 앱 선택 창이 뜨면 카카오내비를 골라 주세요. 오래된 버전이면 업데이트 후 다시 눌러 주세요.</p>
+      </div>
     </section>
 
     <footer class="sig" id="contact">
@@ -372,7 +378,10 @@
       sdkUrl: 'https://t1.kakaocdn.net/kakao_js_sdk/2.8.4/kakao.min.js',
       autoOpen: true,
       autoOpenOnIOS: false,
-      timeoutMs: 15000
+      timeoutMs: 15000,
+      /* 카카오내비 설치 페이지 (아이폰: App Store / 안드로이드: Play 스토어) */
+      storeIOS: 'https://apps.apple.com/kr/app/id417698849',
+      storeAndroid: 'https://play.google.com/store/apps/details?id=com.locnall.KimGiSa'
     };
     /* preview.html이 주입하는 미리보기 값. 실제 링크에서는 비어 있음 (SDK·전화·문자 호출 안 함). */
     const PREVIEW = window.__NAVI_PREVIEW__ || null;
@@ -380,6 +389,7 @@
     const q = new URLSearchParams(location.search);
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || isIOS;
+    const isAndroid = /Android/i.test(navigator.userAgent);
     const rawLat = (q.get('lat') || '').trim();
     const rawLng = (q.get('lng') || '').trim();
     let address = (q.get('addr') || '').trim();
@@ -511,7 +521,7 @@
       invalid:     { tag: '위치 확인', title: '목적지 위치가 올바르지 않아요', detail: '정확한 위치가 담긴 링크를 다시 요청해 주세요.', icon: 'pin', tone: 'error', cta: '담당자에게 문의하기', sub: '아래 연락 버튼으로 이동해요', action: 'contact', buttonIcon: 'message' },
       desktop:     { tag: '방문 장소', title: '길안내는 휴대폰에서 시작해 주세요', detail: '이 페이지의 링크를 휴대폰으로 보내 열어 주세요.', icon: 'desktop', cta: '안내 링크 복사하기', sub: '휴대폰으로 보내서 열어 주세요', action: 'copylink', buttonIcon: 'copy' },
       launched:    { tag: '안내 중', title: '길안내를 시작했어요', detail: '이제 이 화면은 닫으셔도 됩니다.\n닫으면 앱 화면으로 돌아가요.', icon: 'check', tone: 'done', cta: '카카오내비 다시 열기', sub: '내비가 꺼졌다면 다시 눌러 주세요', action: 'navigate', buttonIcon: 'go', calm: true },
-      launcherror: { tag: '방문 장소', title: '카카오내비를 열지 못했어요', detail: '앱 설치 여부를 확인한 뒤 다시 눌러 주세요.', icon: 'alert', tone: 'error', cta: '카카오내비 다시 열기', sub: '앱 설치 후 다시 눌러 주세요', action: 'navigate', buttonIcon: 'go' }
+      launcherror: { tag: '방문 장소', title: '카카오내비를 열지 못했어요', detail: '카카오내비가 없다면 아래 설치하기를 눌러 설치해 주세요.', icon: 'alert', tone: 'error', cta: '카카오내비 다시 열기', sub: '설치 후 다시 눌러 주세요', action: 'navigate', buttonIcon: 'go' }
     };
 
     function renderState(state) {
@@ -543,7 +553,9 @@
       $('contact').classList.toggle('attn', attn);
       $('sigK').textContent = attn ? '도움이 필요하면' : '시스템 문의';
 
-      $('help').hidden = ['ready', 'opening', 'launcherror', 'desktop'].indexOf(currentState) === -1;
+      const showSub = ['ready', 'opening', 'launcherror'].indexOf(currentState) !== -1;
+      $('subActions').hidden = !showSub;
+      if (!showSub) setHelp(false);
       if (model.calm) btn.dataset.variant = 'secondary';
       if (currentState === 'launched') window.scrollTo(0, 0);
       if (currentState === 'missing') {
@@ -601,7 +613,20 @@
         copyText(location.href).then(function (ok) { showToast(ok ? '안내 링크를 복사했어요' : '주소창의 링크를 복사해 주세요.', false, ok ? 'check' : 'alert'); });
       }
     });
-    $('help').addEventListener('toggle', announceHeight);
+    function setHelp(open) {
+      $('helpToggle').setAttribute('aria-expanded', String(open));
+      $('helpBody').hidden = !open;
+      announceHeight();
+    }
+    $('helpToggle').addEventListener('click', function () {
+      setHelp($('helpToggle').getAttribute('aria-expanded') !== 'true');
+    });
+    /* 설치하기: 폰 종류에 맞는 스토어로 이동 */
+    $('installLink').href = isAndroid ? CONFIG.storeAndroid : CONFIG.storeIOS;
+    $('installLink').addEventListener('click', function (event) {
+      buzz();
+      if (PREVIEW) { event.preventDefault(); showToast('미리보기 · 카카오내비 설치 페이지로 이동'); }
+    });
 
     /* ── 카카오 SDK는 화면을 먼저 보여준 뒤 비동기로 불러옵니다 ── */
     function loadScript(id, src) {
